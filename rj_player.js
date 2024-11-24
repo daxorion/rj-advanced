@@ -8,7 +8,7 @@ style.innerHTML = `
     }
 
     .vjs-control-bar {
-        opacity: 0.5 !important;
+        opacity: 0.0 !important;
     }
 `;
 
