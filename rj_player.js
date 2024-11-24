@@ -228,7 +228,7 @@ updateStatusDisplay();
 						console.log('End point set to:', endPoint);
 						updateMarkers();
 						break;
-					case 'a': // Jump to start point
+					case 'w': // Jump to start point
 						player.currentTime(startPoint);
 						player.play();
 						console.log('Jumped to start point:', startPoint);
