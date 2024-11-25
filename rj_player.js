@@ -253,7 +253,7 @@ updateStatusDisplay();
 						break;
 					case 'Enter': // Trigger the next URL link action
 						const nextUrlLink = document.querySelector(
-							'[data-video-js--autoplay-next-target="nextUrlLink"]'
+							'.button_to'
 						);
 						if (nextUrlLink) {
 							nextUrlLink.click();
