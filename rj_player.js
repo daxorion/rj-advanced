@@ -384,11 +384,11 @@ document.addEventListener('keydown', function (event) {
 
 // Webcam Functionality
 
-// Function to create the initial "Launch Webcam" link
+// Function to create the initial "Launch Webcam Mirror" link
 function createLaunchLink() {
   const launchLink = document.createElement('a');
   launchLink.href = '#';
-  launchLink.innerText = 'Launch Webcam';
+  launchLink.innerText = 'Launch Webcam Mirror';
   launchLink.style.fontSize = '14px';
   launchLink.style.color = '#007bff';
   launchLink.style.textDecoration = 'none';
