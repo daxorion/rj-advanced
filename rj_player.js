@@ -42,6 +42,8 @@ window.addEventListener('load', function () {
                 console.log('Video unmirrored');
             }
         };
+        
+        
 
         // Playback control variables
         const frameDuration = 1 / 30; // Assuming 30 FPS
@@ -50,10 +52,9 @@ window.addEventListener('load', function () {
         const skipDuration2 = frameDuration * skipFrames2;
         const skipDuration10 = frameDuration * skipFrames10;
 
-        // Loop variables
         let loopEnabled = false;
-        let startPoint = 0; // In seconds
-        let endPoint = player.duration(); // Default to the full duration
+				let startPoint = 0; // In seconds
+				let endPoint = player.duration() - .5; // Default to 1 second before the end of the video
 
         // Status for keyboard shortcuts
         let kbShortcutsActive = true;
@@ -87,7 +88,7 @@ window.addEventListener('load', function () {
             const marker = document.createElement('div');
             marker.style.position = 'absolute';
             marker.style.height = '100%';
-            marker.style.width = '2px';
+            marker.style.width = '4px';
             marker.style.backgroundColor = color;
             marker.style.top = '0';
             marker.style.transform = 'translateX(-50%)';
@@ -111,11 +112,11 @@ window.addEventListener('load', function () {
                 const duration = player.duration();
                 const startMarker = createMarker(
                     (startPoint / duration) * 100 + '%',
-                    'red'
+                    'green'
                 );
                 const endMarker = createMarker(
                     (endPoint / duration) * 100 + '%',
-                    'green'
+                    'red'
                 );
                 startMarker.style.left = `${(startPoint / duration) * 100}%`;
                 endMarker.style.left = `${(endPoint / duration) * 100}%`;
