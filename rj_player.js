@@ -9,8 +9,23 @@ style.innerHTML = `
     }
 
     .vjs-control-bar {
-        opacity: 0.5 !important;
+        opacity: 0.8 !important;
     }
+    
+  
+
+   /* Custom styles for when the user is inactive */
+.video-js.vjs-user-active {
+    padding-bottom: 100px !important;
+    
+}
+
+.video-js.vjs-user-inactive {
+    padding-bottom: 100px !important;
+    
+}
+
+
 `;
 
 // Append the style element to the head of the document
@@ -54,48 +69,79 @@ window.addEventListener('load', function () {
 
         let loopEnabled = false;
 				let startPoint = 0; // In seconds
-				let endPoint = player.duration() - .5; // Default to 1 second before the end of the video
+				let endPoint = player.duration() - .01; // Default to 1 second before the end of the video
 
         // Status for keyboard shortcuts
         let kbShortcutsActive = true;
 
-        // Create a status display
-        const statusDisplay = document.createElement('div');
-        statusDisplay.style.position = 'fixed';
-        statusDisplay.style.display = 'block';
-        statusDisplay.style.bottom = '10px';
-        statusDisplay.style.left = '10px';
-        statusDisplay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
-        statusDisplay.style.color = 'white';
-        statusDisplay.style.padding = '5px 10px';
-        statusDisplay.style.borderRadius = '5px';
-        statusDisplay.style.zIndex = '1000';
-        statusDisplay.style.fontSize = '14px';
 
-        // Make the div clickable by adding an event listener
-        statusDisplay.style.cursor = 'pointer'; // Change cursor to pointer to indicate it's clickable
 
-        // Add an event listener to redirect to /videoplayertips when clicked in a new window
-        statusDisplay.addEventListener('click', function() {
-            window.open('/courses/109836-welcome-to-rhythm-juice/lessons/1854278-lesson-player-adv-controls', '_blank');
-        });
+// Create a parent container for both elements
+const parentDiv = document.createElement('div');
+parentDiv.style.position = 'fixed';
+parentDiv.style.display = 'flex';
+parentDiv.style.bottom = '10px';
+parentDiv.style.left = '10px';
+parentDiv.style.zIndex = '1000';
 
-        document.body.appendChild(statusDisplay);
-        updateStatusDisplay();
+// Create the status display
+const statusDisplay = document.createElement('div');
+statusDisplay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+statusDisplay.style.color = 'white';
+statusDisplay.style.padding = '5px 10px';
+statusDisplay.style.borderRadius = '5px';
+statusDisplay.style.fontSize = '14px';
+statusDisplay.style.cursor = 'pointer'; // Make clickable
+
+// Add an event listener to toggle hotkeys on click
+statusDisplay.addEventListener('click', function() {
+    kbShortcutsActive = !kbShortcutsActive; // Toggle the hotkeys active state
+    updateStatusDisplay(); // Update the status display text
+});
+parentDiv.appendChild(statusDisplay);
+updateStatusDisplay();
+
+// Create the question mark link element
+const questionMarkButton = document.createElement('div');
+questionMarkButton.textContent = '?';  // Display question mark
+questionMarkButton.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+questionMarkButton.style.color = 'white';
+questionMarkButton.style.padding = '5px 10px';
+questionMarkButton.style.borderRadius = '5px';
+questionMarkButton.style.fontSize = '14px';
+questionMarkButton.style.cursor = 'pointer'; // Make clickable
+questionMarkButton.style.marginLeft = '5px'; // Space between the buttons
+
+// Add an event listener to navigate to a link when clicked
+questionMarkButton.addEventListener('click', function() {
+    window.location.href = '/courses/109836-welcome-to-rhythm-juice/lessons/1854278-03-04-lesson-player-advanced-controls';  // Replace with your desired link
+    console.log('Navigating to the help page');
+});
+parentDiv.appendChild(questionMarkButton);
+
+// Append the parent div to the body
+document.body.appendChild(parentDiv);
+
+
+
+
+        
 
         // Create markers
         const createMarker = (time, color) => {
-            const marker = document.createElement('div');
-            marker.style.position = 'absolute';
-            marker.style.height = '100%';
-            marker.style.width = '4px';
-            marker.style.backgroundColor = color;
-            marker.style.top = '0';
-            marker.style.transform = 'translateX(-50%)';
-            marker.style.zIndex = '1000';
-            marker.classList.add('custom-marker');
-            return marker;
-        };
+		    const marker = document.createElement('div');
+		    marker.style.position = 'absolute';
+		    marker.style.width = '0';  // No width
+		    marker.style.height = '0'; // No height
+		    marker.style.borderLeft = '7.5px solid transparent'; // Half the width of the base
+		    marker.style.borderRight = '7.5px solid transparent'; // Half the width of the base
+		    marker.style.borderTop = `15px solid ${color}`; // Set the color and height of the triangle
+		    marker.style.bottom = '0';
+		    marker.style.transform = 'translateX(-50%)';
+		    marker.style.zIndex = '1000';
+		    marker.classList.add('custom-marker');
+		    return marker;
+		};
 
         const updateMarkers = () => {
             const controlBar = player.el().querySelector('.vjs-control-bar');
@@ -247,6 +293,15 @@ window.addEventListener('load', function () {
                         console.log('Loop enabled:', loopEnabled);
                         updateMarkers();
                         break;
+                    case 'r': // Reset loop
+                        startPoint = 0;
+                        console.log('Start point set to:', startPoint);
+                        updateMarkers();
+                        endPoint = player.duration() - .2;
+                        loopEnabled = true;
+                        console.log('End point set to:', endPoint);
+                        updateMarkers();
+                        break;
                     case 'Escape': // Trigger the cancel autoplay action
                         const cancelAutoplayButton = document.querySelector(
                             '[data-action="click->video-js--autoplay-next#cancelAutoplay"]'
@@ -302,6 +357,18 @@ window.addEventListener('load', function () {
         console.log('No video element found on the page.');
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 // module toggle
 
