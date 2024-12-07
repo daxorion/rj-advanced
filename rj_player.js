@@ -48,7 +48,7 @@ style.innerHTML = `
 }
 
 #instructionsPanel button {
-    margin-top: 20px;
+    margin: 20px;
     background-color: #ff4c4c;
     color: white;
     border: none;
