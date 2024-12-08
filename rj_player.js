@@ -13,16 +13,19 @@ style.innerHTML = `
         background: #00000030 !important;
     }
 
+		.video-js {
+			//padding-top: -25px !important;
+		}
 
 
    /* Custom styles for when the user is inactive */
 .video-js.vjs-user-active {
-   // padding-bottom: 50px !important;
+    //padding-bottom: 50px !important;
    // transition: padding-bottom 0.1s ease-in-out; /* Smooth transition */
 }
 
 .video-js.vjs-user-inactive {
-  // padding-bottom: 50px !important;
+   //padding-bottom: 50px !important;
   //  transition: padding-bottom 0.4s ease-in-out; /* Smooth transition */
 }
 
@@ -557,6 +560,59 @@ document.addEventListener('keydown', function (event) {
 	}
 });
 
+
+
+
+
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'b') {
+        // Prevent the default action (like scrolling)
+        event.preventDefault();
+
+        // Find the control bar element
+        const controlBar = document.querySelector('.vjs-control-bar');
+
+        if (controlBar) {
+            // Toggle opacity
+            let currentOpacity = window.getComputedStyle(controlBar).opacity;
+
+            if (currentOpacity === '0.2') {
+                // Set opacity to 1 if it's currently 0.2
+                controlBar.style.opacity = '1';
+                localStorage.setItem('controlBarOpacity', '1'); // Save setting
+            } else {
+                // Set opacity to 0.2 if it's not 0.2
+                controlBar.style.opacity = '0.2';
+                localStorage.setItem('controlBarOpacity', '0.2'); // Save setting
+            }
+        }
+    }
+});
+
+// Apply saved opacity setting from localStorage when the page loads
+window.addEventListener('load', function() {
+    const savedOpacity = localStorage.getItem('controlBarOpacity');
+    if (savedOpacity) {
+        const controlBar = document.querySelector('.vjs-control-bar');
+        if (controlBar) {
+            controlBar.style.opacity = savedOpacity;
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Webcam Functionality
 
 // Function to create the initial "Launch Webcam Mirror" link
@@ -587,8 +643,17 @@ function createLaunchLink() {
 	return launchLink;
 }
 
+
+
+
+
+
+
 // Function to start the webcam experience (trigger original script)
 function startWebcamExperience(launchLink) {
+	
+	
+	
 	// Hide the "Launch Webcam" link
 	launchLink.style.display = 'none';
 
@@ -608,6 +673,8 @@ function startWebcamExperience(launchLink) {
 	// Find the existing element by ID prefix
 	var existingElement = document.querySelector(
 		'[id^="video-js--theater-mode-toggle"]'
+		
+		
 	);
 
 	if (existingElement) {
@@ -672,6 +739,13 @@ function startWebcamExperience(launchLink) {
 		});
 
 		newDiv.appendChild(closeButton); // Add the close button to the div
+		
+		
+		
+		
+		
+		
+		
 
 		// Create the mirror and PiP buttons (as per the original script)
 		var mirrorButton = document.createElement('button');
@@ -792,46 +866,4 @@ function initialize() {
 // Call the initialize function to set everything up
 initialize();
 //
-
-
-
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'b') {
-        // Prevent the default action (like scrolling)
-        event.preventDefault();
-
-        // Find the control bar element
-        const controlBar = document.querySelector('.vjs-control-bar');
-
-        if (controlBar) {
-            // Toggle opacity
-            let currentOpacity = window.getComputedStyle(controlBar).opacity;
-
-            if (currentOpacity === '0.2') {
-                // Set opacity to 1 if it's currently 0.2
-                controlBar.style.opacity = '1';
-                localStorage.setItem('controlBarOpacity', '1'); // Save setting
-            } else {
-                // Set opacity to 0.2 if it's not 0.2
-                controlBar.style.opacity = '0.2';
-                localStorage.setItem('controlBarOpacity', '0.2'); // Save setting
-            }
-        }
-    }
-});
-
-// Apply saved opacity setting from localStorage when the page loads
-window.addEventListener('load', function() {
-    const savedOpacity = localStorage.getItem('controlBarOpacity');
-    if (savedOpacity) {
-        const controlBar = document.querySelector('.vjs-control-bar');
-        if (controlBar) {
-            controlBar.style.opacity = savedOpacity;
-        }
-    }
-});
-
-
-
-
 
