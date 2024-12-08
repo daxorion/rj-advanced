@@ -9,17 +9,23 @@ style.innerHTML = `
     }
 
     .vjs-control-bar {
-        opacity: 0.8 !important;
+     //  opacity: .2 !important;
+        background: #00000030 !important;
     }
+
+		.video-js {
+			//padding-top: -25px !important;
+		}
+
 
    /* Custom styles for when the user is inactive */
 .video-js.vjs-user-active {
-    // padding-bottom: 100px !important;
+    padding-bottom: 50px !important;
    // transition: padding-bottom 0.1s ease-in-out; /* Smooth transition */
 }
 
 .video-js.vjs-user-inactive {
-   // padding-bottom: 0px !important;
+   padding-bottom: 50px !important;
   //  transition: padding-bottom 0.4s ease-in-out; /* Smooth transition */
 }
 
@@ -59,19 +65,20 @@ style.innerHTML = `
 #instructionsPanel ul {
     list-style-type: none;
     padding: 0;
+    font-size: 1em;
 }
 
 /* Style the shortcut key blocks */
 .hotkey {
     display: inline-block;
     background-color: #f0f0f0; /* Light grey background */
-    padding: 2px 5px; /* Add some padding to the block */
+    padding: 4px 6px; /* Add some padding to the block */
     margin: 2px 5px; /* Space between each key */
     border-radius: 5px; /* Rounded corners */
     font-family: Arial, Helvetica, sans-serif; /* Sans-serif font */
-    font-weight: bold; /* Bold text for emphasis */
+    min-width: 10px;
     color: #333; /* Dark text color for contrast */
-    font-size: 12px; /* Adjust size as needed */
+    font-size: 1em; /* Adjust size as needed */
     text-align: center; /* Center the text within the block */
 }
 
@@ -193,44 +200,45 @@ window.addEventListener('load', function () {
 		instructionsPanel.id = 'instructionsPanel'; // Give it an ID for styling and reference
 		instructionsPanel.innerHTML = `
 <h2>Advanced Player Hotkeys</h2>
-<h4>Use these hotkeys on your laptop. Learn more <a href="#" style="color:red;">here.</a></h4>
+<h4>Use these hotkeys on your laptop. Learn more <a href="/courses/109836-welcome-to-rhythm-juice/lessons/1868165-03-03-lesson-player-hotkeys" style="color:red;">here.</a></h4>
 
 <h3>Playback Controls</h3>
 <ul>
-    <li><span class="hotkey">k</span>: Play/Pause</li>
-    <li><span class="hotkey">j</span>: Back 2 frames</li>
-    <li><span class="hotkey">h</span>: Back 10 frames</li>
-    <li><span class="hotkey">l</span>: Forward 2 frames</li>
-    <li><span class="hotkey">;</span>: Forward 10 frames</li>
+    <li><span class="hotkey">k</span> Play/Pause</li>
+    <li><span class="hotkey">j</span> Back 2 frames</li>
+    <li><span class="hotkey">h</span> Back 10 frames</li>
+    <li><span class="hotkey">l</span> Forward 2 frames</li>
+    <li><span class="hotkey">;</span> Forward 10 frames</li>
 </ul>
 
 <h3>Speed Controls</h3>
 <ul>
-    <li><span class="hotkey">u</span>: Slow Down</li>
-    <li><span class="hotkey">o</span>: Speed Up</li>
-    <li><span class="hotkey">i</span>: 1x (Reset)</li>
+    <li><span class="hotkey">u</span> Slow Down</li>
+    <li><span class="hotkey">o</span> Speed Up</li>
+    <li><span class="hotkey">i</span> 1x (Reset)</li>
 </ul>
 
 <h3>Looping Controls</h3>
 <ul>
-    <li><span class="hotkey">s</span>: Set Start Point</li>
-    <li><span class="hotkey">d</span>: Set End Point & Loop</li>
-    <li><span class="hotkey">w</span>: Jump to Start Point</li>
-    <li><span class="hotkey">e</span>: Loop On/Off</li>
-    <li><span class="hotkey">r</span>: Reset Loop/Repeat Video</li>
+    <li><span class="hotkey">s</span> Set Start Point</li>
+    <li><span class="hotkey">d</span> Set End Point & Loop</li>
+    <li><span class="hotkey">w</span> Jump to Start Point</li>
+    <li><span class="hotkey">e</span> Loop On/Off</li>
+    <li><span class="hotkey">r</span> Reset Loop/Repeat Video</li>
 </ul>
 
 <h3>Miscellaneous Controls</h3>
 <ul>
-    <li><span class="hotkey">p</span>: Toggle Picture-in-Picture</li>
-    <li><span class="hotkey">y</span>: Toggle Mirror</li>
-    <li><span class="hotkey">command+7</span>: Hotkey Toggle</li>
+    <li><span class="hotkey">b</span> Dim Control Bar</li>
+    <li><span class="hotkey">p</span> Toggle Picture-in-Picture</li>
+    <li><span class="hotkey">y</span> Toggle Mirror</li>
+    <li><span class="hotkey">command+7</span> Hotkey Toggle</li>
 </ul>
 
 <h3>End Screen</h3>
 <ul>
-    <li><span class="hotkey">Escape</span>: Repeat Video</li>
-    <li><span class="hotkey">Enter</span>: Complete & Continue</li>
+    <li><span class="hotkey">Escape</span> Repeat Video</li>
+    <li><span class="hotkey">Enter</span> Complete & Continue</li>
 </ul>
 
 <button id="closeInstructions">Close</button>
@@ -388,6 +396,8 @@ window.addEventListener('load', function () {
 						break;
 					case 's': // Set start point
 						startPoint = currentTime;
+						endPoint = player.duration() - 0.2;
+						loopEnabled = true;
 						console.log('Start point set to:', startPoint);
 						updateMarkers();
 						break;
@@ -785,3 +795,46 @@ function initialize() {
 // Call the initialize function to set everything up
 initialize();
 //
+
+
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'b') {
+        // Prevent the default action (like scrolling)
+        event.preventDefault();
+
+        // Find the control bar element
+        const controlBar = document.querySelector('.vjs-control-bar');
+
+        if (controlBar) {
+            // Toggle opacity
+            let currentOpacity = window.getComputedStyle(controlBar).opacity;
+
+            if (currentOpacity === '0.2') {
+                // Set opacity to 1 if it's currently 0.2
+                controlBar.style.opacity = '1';
+                localStorage.setItem('controlBarOpacity', '1'); // Save setting
+            } else {
+                // Set opacity to 0.2 if it's not 0.2
+                controlBar.style.opacity = '0.2';
+                localStorage.setItem('controlBarOpacity', '0.2'); // Save setting
+            }
+        }
+    }
+});
+
+// Apply saved opacity setting from localStorage when the page loads
+window.addEventListener('load', function() {
+    const savedOpacity = localStorage.getItem('controlBarOpacity');
+    if (savedOpacity) {
+        const controlBar = document.querySelector('.vjs-control-bar');
+        if (controlBar) {
+            controlBar.style.opacity = savedOpacity;
+        }
+    }
+});
+
+
+
+
+
