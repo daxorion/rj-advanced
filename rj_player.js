@@ -565,41 +565,6 @@ document.addEventListener('keydown', function (event) {
 
 
 
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'b') {
-        // Prevent the default action (like scrolling)
-        event.preventDefault();
-
-        // Find the control bar element
-        const controlBar = document.querySelector('.vjs-control-bar');
-
-        if (controlBar) {
-            // Toggle opacity
-            let currentOpacity = window.getComputedStyle(controlBar).opacity;
-
-            if (currentOpacity === '0.2') {
-                // Set opacity to 1 if it's currently 0.2
-                controlBar.style.opacity = '1';
-                localStorage.setItem('controlBarOpacity', '1'); // Save setting
-            } else {
-                // Set opacity to 0.2 if it's not 0.2
-                controlBar.style.opacity = '0.2';
-                localStorage.setItem('controlBarOpacity', '0.2'); // Save setting
-            }
-        }
-    }
-});
-
-// Apply saved opacity setting from localStorage when the page loads
-window.addEventListener('load', function() {
-    const savedOpacity = localStorage.getItem('controlBarOpacity');
-    if (savedOpacity) {
-        const controlBar = document.querySelector('.vjs-control-bar');
-        if (controlBar) {
-            controlBar.style.opacity = savedOpacity;
-        }
-    }
-});
 
 
 
@@ -608,8 +573,11 @@ window.addEventListener('load', function() {
 
 
 
+function delayedExecution() {
+    // Your entire JS code goes here
 
-
+    // For demonstration, here is an example:
+    console.log("The script is executed after 3 seconds!");
 
 
 
@@ -645,10 +613,6 @@ function createLaunchLink() {
 
 
 
-
-
-
-
 // Function to start the webcam experience (trigger original script)
 function startWebcamExperience(launchLink) {
 	
@@ -673,8 +637,6 @@ function startWebcamExperience(launchLink) {
 	// Find the existing element by ID prefix
 	var existingElement = document.querySelector(
 		'[id^="video-js--theater-mode-toggle"]'
-		
-		
 	);
 
 	if (existingElement) {
@@ -851,7 +813,7 @@ function startWebcamExperience(launchLink) {
 }
 
 // Initialize the page with the "Launch Webcam" link
-function initialize() {
+function initializeweb() {
 	const existingElement = document.querySelector(
 		'[id^="video-js--theater-mode-toggle"]'
 	);
@@ -864,6 +826,15 @@ function initialize() {
 }
 
 // Call the initialize function to set everything up
-initialize();
+initializeweb();
 //
 
+
+
+
+
+    // Any other script that should run after the delay goes here.
+}
+
+// Set a delay to launch webcam (in milliseconds, e.g., 3000ms = 3 seconds)
+setTimeout(delayedExecution, 500);
