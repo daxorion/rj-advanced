@@ -13,19 +13,16 @@ style.innerHTML = `
         background: #00000030 !important;
     }
 
-		.video-js {
-			//padding-top: -25px !important;
-		}
 
 
    /* Custom styles for when the user is inactive */
 .video-js.vjs-user-active {
-    padding-bottom: 50px !important;
+   // padding-bottom: 50px !important;
    // transition: padding-bottom 0.1s ease-in-out; /* Smooth transition */
 }
 
 .video-js.vjs-user-inactive {
-   padding-bottom: 50px !important;
+  // padding-bottom: 50px !important;
   //  transition: padding-bottom 0.4s ease-in-out; /* Smooth transition */
 }
 
