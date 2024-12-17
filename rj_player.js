@@ -320,8 +320,80 @@ window.addEventListener('load', function () {
 				const currentTime = player.currentTime();
 				let playbackRate = player.playbackRate();
 
+
+
+
+
+
+
+
+				//Dim Control Bar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				switch (event.key) {
-					case 'k': // Z to toggle play/pause for pip
+					
+					case 'b': // Dim Control bar
+					
+							if (event.key === 'b') {
+		        // Prevent the default action (like scrolling)
+		        event.preventDefault();
+		
+		        // Find the control bar element
+		        const controlBar = document.querySelector('.vjs-control-bar');
+		
+		        if (controlBar) {
+		            // Toggle opacity
+		            let currentOpacity = window.getComputedStyle(controlBar).opacity;
+		
+		            if (currentOpacity === '0.2') {
+		                // Set opacity to 1 if it's currently 0.2
+		                controlBar.style.opacity = '1';
+		                localStorage.setItem('controlBarOpacity', '1'); // Save setting
+		            } else {
+		                // Set opacity to 0.2 if it's not 0.2
+		                controlBar.style.opacity = '0.2';
+		                localStorage.setItem('controlBarOpacity', '0.2'); // Save setting
+				            }
+				        }
+				    }
+				    
+				    // Apply saved opacity setting from localStorage when the page loads
+						window.addEventListener('load', function() {
+						    const savedOpacity = localStorage.getItem('controlBarOpacity');
+						    if (savedOpacity) {
+						        const controlBar = document.querySelector('.vjs-control-bar');
+						        if (controlBar) {
+						            controlBar.style.opacity = savedOpacity;
+						        }
+						    }
+						});
+					break;
+					
+					case 'k': // k to toggle play/pause for pip
 						event.preventDefault(); // Prevent scrolling the page
 
 						// Check if PIP is active
@@ -559,47 +631,6 @@ document.addEventListener('keydown', function (event) {
 		}
 	}
 });
-
-
-
-
-
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'b') {
-        // Prevent the default action (like scrolling)
-        event.preventDefault();
-
-        // Find the control bar element
-        const controlBar = document.querySelector('.vjs-control-bar');
-
-        if (controlBar) {
-            // Toggle opacity
-            let currentOpacity = window.getComputedStyle(controlBar).opacity;
-
-            if (currentOpacity === '0.2') {
-                // Set opacity to 1 if it's currently 0.2
-                controlBar.style.opacity = '1';
-                localStorage.setItem('controlBarOpacity', '1'); // Save setting
-            } else {
-                // Set opacity to 0.2 if it's not 0.2
-                controlBar.style.opacity = '0.2';
-                localStorage.setItem('controlBarOpacity', '0.2'); // Save setting
-            }
-        }
-    }
-});
-
-// Apply saved opacity setting from localStorage when the page loads
-window.addEventListener('load', function() {
-    const savedOpacity = localStorage.getItem('controlBarOpacity');
-    if (savedOpacity) {
-        const controlBar = document.querySelector('.vjs-control-bar');
-        if (controlBar) {
-            controlBar.style.opacity = savedOpacity;
-        }
-    }
-});
-
 
 
 
